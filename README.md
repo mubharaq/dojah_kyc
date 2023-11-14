@@ -1,10 +1,10 @@
-# Dojah Kyc
+# Dojah Kyc ![Dojah-logo](https://dojah.io/_next/static/media/logo.f53bd2b5.svg)
 
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 [![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)](https://github.com/felangel/mason)
 [![License: MIT][license_badge]][license_link]
 
-Unofficail Dojah KYC widget
+Unofficial Dojah KYC widget
 
 ## Installation 💻
 
@@ -51,7 +51,7 @@ import 'package:dojah_kyc/dojah_kyc.dart';
         //   },
         // ]
     }),
-    showLogs: true,
+    showLogs: true //optional,
     onClosed: () {
         print('closed');
         Navigator.pop(context);},
@@ -74,7 +74,6 @@ import 'package:dojah_kyc/dojah_kyc.dart';
 - **onSuccess (optional):** A callback function that gets triggered when the verification is successful. It receives a dynamic parameter representing the success response.
 
 - **onError (optional):** A callback function that gets triggered when an error occurs during the verification process. It receives an error message as a parameter.
-
 
 
 [flutter_install_link]: https://docs.flutter.dev/get-started/install
