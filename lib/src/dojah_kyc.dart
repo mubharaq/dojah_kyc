@@ -3,6 +3,7 @@ import 'package:dojah_kyc/dojah_kyc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 ///Dojah KYC WebView
 class DojahKyc extends StatefulWidget {
@@ -50,8 +51,12 @@ class DojahKyc extends StatefulWidget {
         ),
         isDismissible: isDismissible,
         enableDrag: isDismissible,
+        useSafeArea: true,
         context: context,
         isScrollControlled: true,
+        constraints: BoxConstraints(
+          maxHeight: context.screenHeight(.9),
+        ),
         builder: (context) => Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -88,7 +93,6 @@ class _DojahKycState extends State<DojahKyc> {
     crossPlatform: InAppWebViewOptions(
       clearCache: true,
       useShouldOverrideUrlLoading: true,
-      supportZoom: false,
       mediaPlaybackRequiresUserGesture: false,
     ),
     android: AndroidInAppWebViewOptions(
@@ -197,9 +201,13 @@ class _DojahKycState extends State<DojahKyc> {
               }),
               androidOnPermissionRequest:
                   (controller, origin, resources) async {
+                final status = await Permission.camera.request();
+
                 return PermissionRequestResponse(
                   resources: resources,
-                  action: PermissionRequestResponseAction.GRANT,
+                  action: status.isGranted
+                      ? PermissionRequestResponseAction.GRANT
+                      : PermissionRequestResponseAction.DENY,
                 );
               },
             ),

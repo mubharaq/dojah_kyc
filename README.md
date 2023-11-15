@@ -33,34 +33,38 @@ import 'package:dojah_kyc/dojah_kyc.dart';
 ### Example
 
 ```dart
-    await DojahKyc(
-      config: const DojahConfig(
-      publicKey: "your key",
-      appId: 'your app id',
-      type: 'custom',
-      config: {
-      'widget_id': optional widget id,
-        // "pages": [
-        //   {
-        //     "page": "user-data",
-        //     "config": {"enabled": false}
-        //   },
-        //   {
-        //     "page": "government-data",
-        //     "config": {"bvn": true, "selfie": true}
-        //   },
-        // ]
-    }),
-    showLogs: true //optional,
-    onClosed: () {
-        print('closed');
-        Navigator.pop(context);},
-    onSuccess: (v) {
-      print(v.toString());
-      Navigator.pop(context);
-    },
-    onError: (){},
-    ).show(context);
+     await DojahKyc(
+            config: const DojahConfig(
+            publicKey: "test_pk_xxxxxxxxxxxx",
+            appId: 'xxxxxxxxxxxxxxxxxx',
+            type: 'custom',
+            configData: {
+            'widget_id': 'xxxxxxxxxxxxxx',
+            "pages": [
+            {
+            "page": "user-data",
+            "config": {"enabled": false}
+            },
+            {
+            "page": "government-data",
+            "config": {"bvn": true, "selfie": true}
+            },
+            ]
+            }),
+            showLogs: true,
+            onClosed: () {
+            print('closed');
+            Navigator.pop(context);
+            },
+            onSuccess: (v) {
+            print(v.toString());
+            Navigator.pop(context);
+            },
+            onError: (v) {
+            print(v.toString());
+            Navigator.pop(context);
+            },
+            ).show(context);
 ```
 
 ### Parameters

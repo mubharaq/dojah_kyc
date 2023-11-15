@@ -47,21 +47,21 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () async {
               await DojahKyc(
                 config: const DojahConfig(
-                    publicKey: "your key",
-                    appId: 'your app id',
+                    publicKey: "test_pk_xxxxxxxxxxxx",
+                    appId: 'xxxxxxxxxxxxxxxxxx',
                     type: 'custom',
                     configData: {
-                      'widget_id': 'optional widget id',
-                      // "pages": [
-                      //   {
-                      //     "page": "user-data",
-                      //     "config": {"enabled": false}
-                      //   },
-                      //   {
-                      //     "page": "government-data",
-                      //     "config": {"bvn": true, "selfie": true}
-                      //   },
-                      // ]
+                      'widget_id': 'xxxxxxxxxxxxxx',
+                      "pages": [
+                        {
+                          "page": "user-data",
+                          "config": {"enabled": false}
+                        },
+                        {
+                          "page": "government-data",
+                          "config": {"bvn": true, "selfie": true}
+                        },
+                      ]
                     }),
                 showLogs: true,
                 onClosed: () {
