@@ -50,40 +50,30 @@ class DojahKyc extends StatefulWidget {
           ),
         ),
         isDismissible: isDismissible,
-        enableDrag: isDismissible,
+        enableDrag: false,
         useSafeArea: true,
         context: context,
         isScrollControlled: true,
         constraints: BoxConstraints(
           maxHeight: context.screenHeight(.9),
         ),
-        builder: (context) => SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  height: context.screenHeight(.8),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                    ),
-                    child: Center(
-                      child: DojahKyc(
-                        config: config,
-                        onClosed: onClosed,
-                        onSuccess: onSuccess,
-                        onError: onError,
-                        showLogs: showLogs,
-                        errorWidget: errorWidget,
-                      ),
-                    ),
-                  ),
+        builder: (context) => Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: context.screenHeight(.8),
+                child: DojahKyc(
+                  config: config,
+                  onClosed: onClosed,
+                  onSuccess: onSuccess,
+                  onError: onError,
+                  showLogs: showLogs,
+                  errorWidget: errorWidget,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       );
