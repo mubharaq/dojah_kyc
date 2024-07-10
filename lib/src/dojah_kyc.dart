@@ -194,6 +194,11 @@ class _DojahKycState extends State<DojahKyc> {
               onLoadStart: (controller, url) => setState(() {
                 isLoading = true;
               }),
+              androidOnGeolocationPermissionsShowPrompt:
+                  (controller, origin) async {
+                return GeolocationPermissionShowPromptResponse(
+                    allow: true, origin: origin, retain: true);
+              },
               androidOnPermissionRequest:
                   (controller, origin, resources) async {
                 final status = await Permission.camera.request();
