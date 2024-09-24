@@ -1,16 +1,16 @@
 name: dojah_kyc
 description: Unofficial Dojah KYC widget
-version: 0.1.0+6
+version: 0.1.0+7
 homepage: https://github.com/mubharaq/dojah_kyc
 
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.10.0"
+  flutter: ">=3.24.3"
 
 dependencies:
   connectivity_plus: ^5.0.1
-  flutter_inappwebview: ^5.8.0
+  flutter_inappwebview: ^6.1.0
   permission_handler: ^11.0.1
   flutter:
     sdk: flutter
