@@ -47,11 +47,11 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () async {
               await DojahKyc(
                 config: const DojahConfig(
-                    publicKey: "test_pk_xxxxxxxxxxxx",
-                    appId: 'xxxxxxxxxxxxxxxxxx',
+                    publicKey: "test_pk_xxxxxxxxxxxxxxx",
+                    appId: 'xxxxxxxxxxxxx',
                     type: 'custom',
                     configData: {
-                      'widget_id': 'xxxxxxxxxxxxxx',
+                      'widget_id': 'xxxxxxxxxx',
                       "pages": [
                         {
                           "page": "user-data",
@@ -65,7 +65,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     }),
                 showLogs: true,
                 onClosed: () {
-                  print('closed');
                   Navigator.pop(context);
                 },
                 onSuccess: (v) {

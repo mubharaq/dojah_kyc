@@ -55,25 +55,17 @@ class DojahKyc extends StatefulWidget {
         context: context,
         isScrollControlled: true,
         constraints: BoxConstraints(
-          maxHeight: context.screenHeight(.9),
+          maxHeight: context.screenHeight(.8),
         ),
         builder: (context) => Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                height: context.screenHeight(.8),
-                child: DojahKyc(
-                  config: config,
-                  onClosed: onClosed,
-                  onSuccess: onSuccess,
-                  onError: onError,
-                  showLogs: showLogs,
-                  errorWidget: errorWidget,
-                ),
-              ),
-            ],
+          padding: const EdgeInsets.all(16),
+          child: DojahKyc(
+            config: config,
+            onClosed: onClosed,
+            onSuccess: onSuccess,
+            onError: onError,
+            showLogs: showLogs,
+            errorWidget: errorWidget,
           ),
         ),
       );
@@ -84,19 +76,12 @@ class DojahKyc extends StatefulWidget {
 
 class _DojahKycState extends State<DojahKyc> {
   InAppWebViewController? _controller;
-  InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
-    crossPlatform: InAppWebViewOptions(
+  InAppWebViewSettings options = InAppWebViewSettings(
       clearCache: true,
-      useShouldOverrideUrlLoading: true,
       mediaPlaybackRequiresUserGesture: false,
-    ),
-    android: AndroidInAppWebViewOptions(
-      useHybridComposition: true,
-    ),
-    ios: IOSInAppWebViewOptions(
       allowsInlineMediaPlayback: true,
-    ),
-  );
+      useShouldOverrideUrlLoading: true,
+      transparentBackground: true);
   bool isLoading = true;
 
   bool _hasError = false;
@@ -139,10 +124,11 @@ class _DojahKycState extends State<DojahKyc> {
               ),
             ],
             InAppWebView(
-              initialOptions: options,
+              initialSettings: options,
+              // initialUrlRequest: URLRequest(url: WebUri('http://google.com')),
               initialData: InAppWebViewInitialData(
-                baseUrl: Uri.parse('https://widget.dojah.io'),
-                androidHistoryUrl: Uri.parse('https://widget.dojah.io'),
+                baseUrl: WebUri.uri(Uri.parse('widget.dojah.io')),
+                historyUrl: WebUri.uri(Uri.parse('widget.dojah.io')),
                 data: DojahFunctions.createWidgetHtml(
                   widget.config,
                 ),
@@ -168,46 +154,46 @@ class _DojahKycState extends State<DojahKyc> {
                   },
                 );
               },
-              onLoadStop: (controller, url) => setState(() {
+              onLoadStop: (_, __) => setState(() {
                 isLoading = false;
                 loadingPercent = 100;
               }),
-              onLoadError: (controller, url, code, message) {
+              onReceivedError: (_, __, code) {
                 // Handle page loading errors
                 _hasError = true;
-                DojahLogger.e('Load Error: $message');
+                DojahLogger.e('Load Error: $code');
               },
-              onProgressChanged: (controller, v) => setState(() {
+              onProgressChanged: (_, v) => setState(() {
                 loadingPercent = v;
                 if (loadingPercent == 100) {
                   isLoading = false;
                 }
               }),
-              onLoadHttpError: (controller, url, statusCode, description) {
+              onReceivedHttpError: (_, __, statusCode) {
                 // Capture http error;
-                DojahLogger.e('Http Error: $description');
+                DojahLogger.e('Http Error: $statusCode');
               },
-              onConsoleMessage: (controller, consoleMessage) {
+              onConsoleMessage: (_, consoleMessage) {
                 // Capture console messages
                 DojahLogger.e('Console error: ${consoleMessage.message}');
               },
-              onLoadStart: (controller, url) => setState(() {
+              onLoadStart: (_, __) => setState(() {
                 isLoading = true;
               }),
-              androidOnGeolocationPermissionsShowPrompt:
-                  (controller, origin) async {
+              onGeolocationPermissionsShowPrompt: (_, origin) async {
                 return GeolocationPermissionShowPromptResponse(
                     allow: true, origin: origin, retain: true);
               },
-              androidOnPermissionRequest:
-                  (controller, origin, resources) async {
+              shouldOverrideUrlLoading: (controller, action) async {
+                return NavigationActionPolicy.ALLOW;
+              },
+              onPermissionRequest: (_, origin) async {
                 final status = await Permission.camera.request();
 
-                return PermissionRequestResponse(
-                  resources: resources,
+                return PermissionResponse(
                   action: status.isGranted
-                      ? PermissionRequestResponseAction.GRANT
-                      : PermissionRequestResponseAction.DENY,
+                      ? PermissionResponseAction.GRANT
+                      : PermissionResponseAction.DENY,
                 );
               },
             ),
