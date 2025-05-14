@@ -77,11 +77,12 @@ class DojahKyc extends StatefulWidget {
 class _DojahKycState extends State<DojahKyc> {
   InAppWebViewController? _controller;
   InAppWebViewSettings options = InAppWebViewSettings(
-      clearCache: true,
-      mediaPlaybackRequiresUserGesture: false,
-      allowsInlineMediaPlayback: true,
-      useShouldOverrideUrlLoading: true,
-      transparentBackground: true);
+    clearCache: true,
+    mediaPlaybackRequiresUserGesture: false,
+    allowsInlineMediaPlayback: true,
+    useShouldOverrideUrlLoading: true,
+    transparentBackground: true,
+  );
   bool isLoading = true;
 
   bool _hasError = false;
@@ -101,10 +102,11 @@ class _DojahKycState extends State<DojahKyc> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<ConnectivityResult>(
+    return FutureBuilder<List<ConnectivityResult>>(
       future: Connectivity().checkConnectivity(),
       builder: (context, snapshot) {
-        /// Show error view
+        final noConnection =
+            snapshot.data?.contains(ConnectivityResult.none) ?? false;
         if (hasError == true) {
           return Center(
             child:
@@ -117,15 +119,13 @@ class _DojahKycState extends State<DojahKyc> {
             if (isLoading == true) ...[
               const CupertinoActivityIndicator(),
             ],
-            if (snapshot.hasData == true &&
-                snapshot.data != ConnectivityResult.none) ...[
+            if (snapshot.hasData == true && noConnection) ...[
               const CupertinoActivityIndicator(
                 radius: 20,
               ),
             ],
             InAppWebView(
               initialSettings: options,
-              // initialUrlRequest: URLRequest(url: WebUri('http://google.com')),
               initialData: InAppWebViewInitialData(
                 baseUrl: WebUri.uri(Uri.parse('widget.dojah.io')),
                 historyUrl: WebUri.uri(Uri.parse('widget.dojah.io')),
@@ -159,7 +159,6 @@ class _DojahKycState extends State<DojahKyc> {
                 loadingPercent = 100;
               }),
               onReceivedError: (_, __, code) {
-                // Handle page loading errors
                 _hasError = true;
                 DojahLogger.e('Load Error: $code');
               },
@@ -170,11 +169,9 @@ class _DojahKycState extends State<DojahKyc> {
                 }
               }),
               onReceivedHttpError: (_, __, statusCode) {
-                // Capture http error;
                 DojahLogger.e('Http Error: $statusCode');
               },
               onConsoleMessage: (_, consoleMessage) {
-                // Capture console messages
                 DojahLogger.e('Console error: ${consoleMessage.message}');
               },
               onLoadStart: (_, __) => setState(() {
@@ -182,7 +179,10 @@ class _DojahKycState extends State<DojahKyc> {
               }),
               onGeolocationPermissionsShowPrompt: (_, origin) async {
                 return GeolocationPermissionShowPromptResponse(
-                    allow: true, origin: origin, retain: true);
+                  allow: true,
+                  origin: origin,
+                  retain: true,
+                );
               },
               shouldOverrideUrlLoading: (controller, action) async {
                 return NavigationActionPolicy.ALLOW;

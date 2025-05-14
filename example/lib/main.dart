@@ -8,7 +8,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,9 +35,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
@@ -52,16 +48,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     type: 'custom',
                     configData: {
                       'widget_id': 'xxxxxxxxxx',
-                      "pages": [
-                        {
-                          "page": "user-data",
-                          "config": {"enabled": false}
-                        },
-                        {
-                          "page": "government-data",
-                          "config": {"bvn": true, "selfie": true}
-                        },
-                      ]
                     }),
                 showLogs: true,
                 onClosed: () {
