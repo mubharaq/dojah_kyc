@@ -9,3 +9,7 @@
 # 0.3.0
 
 - chore: dependencies cleanup 🎉
+
+# 0.4.0
+
+- fix: fixed android permission loop issue 🎉
