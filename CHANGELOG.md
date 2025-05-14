@@ -13,3 +13,7 @@
 # 0.4.0
 
 - fix: fixed android permission loop issue 🎉
+
+# 0.4.1
+
+- fix: fixed reference id formatting 🎉

@@ -30,7 +30,7 @@ class DojahFunctions {
       )},
                                       gov_data: ${json.encode(config.govtData ?? {})},
                                       metadata: ${json.encode(config.metaData ?? {})},
-                                      reference_id: ${config.referenceId},
+                                      reference_id: "${config.referenceId}",
                                       onSuccess: function (response) {
                                       window.flutter_inappwebview.callHandler('onSuccessCallback', response)
                                       },
