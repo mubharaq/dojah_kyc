@@ -17,3 +17,7 @@
 # 0.4.1
 
 - fix: fixed reference id formatting 🎉
+
+# 1.0.0
+
+- chore: updated dependencies 🎉
